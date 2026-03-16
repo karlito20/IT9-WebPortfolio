@@ -304,7 +304,6 @@ $contact = $contactResult ? $contactResult->fetch_assoc() : null;
     <section class="container-fluid section my-4">
         <div class="container panel py-4 px-3 px-md-4 px-lg-5">
             <h3 class="text-primary mb-4">Contact Section</h3>
-
             <div class="card skill-card border-0 p-4 mb-4">
                 <h5 class="text-light mb-3">Input Form</h5>
                 <?php 
@@ -347,7 +346,54 @@ $contact = $contactResult ? $contactResult->fetch_assoc() : null;
                     </div>
                 </form>
             </div>
+        </div>
+    </section>
 
+    <section class="container-fluid section my-4">
+        <div class="container panel py-4 px-3 px-md-4 px-lg-5">
+            <h3 class="text-primary mb-4">User Credentials</h3>
+            <div class="card skill-card border-0 p-4 mb-4">
+                <?php
+                if (isset($_POST['password-save'])) {
+                    $newPassword = $_POST['new_password'];
+                    $newPasswordConfirm = $_POST['new_password_confirm'];
+
+                    if ($newPassword !== $newPasswordConfirm) {
+                        echo '<code class="alert alert-danger">Passwords do not match.</code>';
+                    } else {
+                        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                        $username = $_SESSION['username'];
+                        $sql = "UPDATE user_credentials SET password_hashed='$hashedPassword' WHERE username='$username'";
+
+                        if ($conn->query($sql) === TRUE) {
+                            echo '<script>alert("Password updated successfully.");</script>';
+                            header("Location: manage.php");
+                        } else {
+                            echo '<code class="alert alert-danger">Error updating password: ' . $conn->error . '</code>';
+                        }
+                    }
+                }
+                ?>
+                <form method="post">
+                    <div class="row g-3">
+                        <div class="col-lg-4 col-sm-12">
+                            <label for="username" class="form-label text-light">Username</label>
+                            <input type="text" name="username" class="form-control bg-dark text-light border-secondary" value="<?= htmlspecialchars($_SESSION['username']) ?>" disabled>
+                        </div>
+                        <div class="col-lg-4 col-sm-12">
+                            <label for="new-password" class="form-label text-light">New Password</label>
+                            <input type="password" name="new_password" class="form-control bg-dark text-light border-secondary">
+                        </div>
+                        <div class="col-lg-4 col-sm-12">
+                            <label for="new-password-confirm" class="form-label text-light">Confirm New Password</label>
+                            <input type="password" name="new_password_confirm" class="form-control bg-dark text-light border-secondary">
+                        </div>
+                        <div class="col-12 d-flex flex-row-reverse gap-2 mt-3">
+                            <button type="submit" class="btn btn-primary" name="password-save">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </section>
 </main>
@@ -360,25 +406,6 @@ $contact = $contactResult ? $contactResult->fetch_assoc() : null;
 </footer>
 
 <script src="assets/js/bootstrap.bundle.min.js"></script>
-<script>
-document.querySelectorAll('.edit-skill-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-        document.getElementById('skill-edit-id').value = btn.dataset.id;
-        document.getElementById('skill-name').value = btn.dataset.skill;
-        document.getElementById('skill-description').value = btn.dataset.description;
-        document.getElementById('skill-name').focus();
-    });
-});
-
-document.querySelectorAll('.edit-project-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-        document.getElementById('project-edit-id').value = btn.dataset.id;
-        document.getElementById('project-title').value = btn.dataset.title;
-        document.getElementById('project-description').value = btn.dataset.description;
-        document.getElementById('project-title').focus();
-    });
-});
-</script>
 </body>
 </html>
 

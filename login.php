@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (password_verify($password, $result->fetch_assoc()['password_hashed'])) {
             $_SESSION['logged_in'] = true;
+            $_SESSION['username'] = $username;
             header("Location: manage.php");
             exit();
         } else {
