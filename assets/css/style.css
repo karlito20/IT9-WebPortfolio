@@ -1,0 +1,74 @@
+html::-webkit-scrollbar {
+	display: none;
+}
+
+html,
+body {
+	height: 100%;
+	scroll-behavior: smooth;
+}
+body {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	background-image: url(../images/background.png);
+	background-size: auto;
+	background-repeat: repeat-y;
+}
+main {
+	flex: 1 0 auto;
+}
+
+/* * {
+	outline: 1px solid red;
+} */
+
+.panel {
+	background-color: rgba(44, 46, 57, 0.3);
+	border: 2px solid rgba(44, 46, 57, 1);
+	border-radius: 40px;
+	border-top: 1px solid rgba(255, 255, 255, 0.2);
+	border-left: 1px solid rgba(255, 255, 255, 0.2);
+	border-bottom: 1px solid #ff79c6;
+}
+
+.stretch-section {
+	background-color: rgba(44, 44, 44, 0.4);
+	border: 2px solid rgba(44, 46, 57, 0.7);
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	/* height: 200px; */
+}
+
+.skill-icon {
+	width: clamp(48px, 8vw, 80px);
+	height: auto;
+}
+
+.hero-heading {
+	font-size: clamp(1.8rem, 4vw, 3.5rem);
+	font-weight: 300;
+}
+
+.skill-card {
+	background-color: rgba(44, 46, 57, 0.42);
+	border-radius: 18px;
+	border-top: 1px solid rgba(255, 255, 255, 0.18);
+	border-left: 1px solid rgba(255, 255, 255, 0.12);
+	border-bottom: 1px solid #ff79c6;
+	backdrop-filter: blur(3px);
+	transition:
+		transform 0.2s ease,
+		box-shadow 0.2s ease;
+}
+
+.skill-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+}
+
+.project-thumb {
+	width: 100%;
+	height: 200px;
+	object-fit: cover;
+}
